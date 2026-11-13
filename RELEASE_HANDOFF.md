@@ -130,6 +130,11 @@ Do **not** re-run 001–019. In particular 015/017/019 create rooms as bare user
 
 ### 3.3 Edge Functions (Supabase CLI on any machine, or the dashboard editor)
 
+**Shortcut for 3.3 and 3.4:** `SUPABASE_ACCESS_TOKEN=<token> node scripts/deploy-backend.mjs` generates the
+secrets, deploys both functions, stores the Vault secrets, runs `024_release_jobs.sql`, checks the result
+and only then writes the public key into `public/push-config.js` for you to commit. It needs 020–023
+applied first and can be re-run. The manual steps below are what it does.
+
 ```
 supabase functions deploy tt-login --no-verify-jwt
 supabase functions deploy tt-push  --no-verify-jwt
