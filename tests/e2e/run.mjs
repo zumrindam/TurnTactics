@@ -107,6 +107,8 @@ const server = http.createServer((req, res) => {
   }
   // Test-only public configuration, served from memory. The real online-config.js is never read or changed.
   if (url.pathname === '/online-config.js') { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("export const SUPABASE_URL='https://tt-e2e.invalid';export const SUPABASE_PUBLISHABLE_KEY='e2e';"); return; }
+  // Push is unconfigured here whatever the real push-config.js holds, so the "Pending setup" label stays covered.
+  if (url.pathname === '/push-config.js') { res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end("export const VAPID_PUBLIC_KEY='';"); return; }
   const file = path.join(PUBLIC, path.normalize(url.pathname === '/' ? '/index.html' : url.pathname));
   if (!file.startsWith(PUBLIC) || !existsSync(file)) { res.writeHead(404); res.end('not found'); return; }
   // The same Content-Security-Policy recommended for production (RELEASE_HANDOFF.md), so the app is proven to run under it.
